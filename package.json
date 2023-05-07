@@ -1,0 +1,19 @@
+{
+  "name": "discord",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "nodemon index.js",
+    "rc": "node register-commands"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "14.11.0",
+    "dotenv": "16.0.3",
+    "openai": "3.2.1"
+  },
+  "main": "index.js",
+  "devDependencies": {},
+  "description": ""
+}

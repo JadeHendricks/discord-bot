@@ -2,7 +2,8 @@
   "name": "discord",
   "version": "1.0.0",
   "scripts": {
-    "start": "node registerCommands && nodemon index.js"
+    "start": "nodemon index.js",
+    "rc": "node registerCommands"
   },
   "keywords": [],
   "author": "",

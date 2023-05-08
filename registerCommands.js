@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { REST, Routes, ApplicationCommandOptionType } = require("discord.js");
+const { REST, Routes, ApplicationCommandOptionType, PermissionFlagsBits } = require("discord.js");
 
 const commands = [
     {
@@ -19,6 +19,41 @@ const commands = [
                 required: true
             }
         ]
+    },
+    {
+        name: "ban",
+        description: "Bans a member from this server.",
+        options: [
+            {
+                name: "target-user",
+                description: "The user you want to ban.",
+                type: ApplicationCommandOptionType.Mentionable,
+                required: true
+            },
+            {
+                name: "reason",
+                description: "The reason you want ban.",
+                type: ApplicationCommandOptionType.String
+            }
+        ]
+    },
+    {
+        name: "kick",
+        description: "Kicks a member from this server.",
+        options: [
+            {
+                name: "target-user",
+                description: "The user you want to kick.",
+                type: ApplicationCommandOptionType.Mentionable,
+                required: true
+            },
+            {
+                name: "reason",
+                description: "The reason you want kick.",
+                type: ApplicationCommandOptionType.String,
+                required: false
+            }
+        ]
     }
 ];
 
@@ -26,7 +61,7 @@ const rest = new REST({version: "10"}).setToken(process.env.TOKEN);
 
 (async() => {
     try {
-        console.log("Registering slash commands");
+        console.log("Registering slash commands", commands);
         await rest.put(
             Routes.applicationGuildCommands(
                 process.env.CLIENT_ID, 
@@ -38,6 +73,6 @@ const rest = new REST({version: "10"}).setToken(process.env.TOKEN);
         console.log("Slash commands were registered successfully!");
         
     } catch (error) {
-        console.log(`There was an error: ${error}`);
+        console.error(`There was an error registering commands: ${error.message}`);
     }
 })();

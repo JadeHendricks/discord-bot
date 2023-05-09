@@ -37,9 +37,8 @@ module.exports = async (interaction) => {
         }
     
         try {
-            //await targetUser.ban({ reason });
-            //await interaction.editReply(`User ${targetUser} has been banned.\nReason: ${reason}`)
-            await interaction.editReply(`User ${targetUser} has been banned.\nReason: ${reason}`);
+            await interaction.guild.bans.create(targetUserId, {reason});
+            await interaction.editReply(`User has been banned.\nReason: ${reason}`)
         } catch (error) {
             console.log(`There was an error when banning: ${error}`);
         }

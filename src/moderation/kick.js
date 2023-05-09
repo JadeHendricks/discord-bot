@@ -37,9 +37,8 @@ module.exports = async (interaction) => {
         }
     
         try {
-            //await targetUser.kick(reason);
-            //await interaction.editReply(`User ${targetUser} has been banned.\nReason: ${reason}`)
-            await interaction.editReply(`User ${targetUser} has been kicked.\nReason: ${reason}`);
+            await interaction.guild.members.kick(targetUserId, reason)
+            await interaction.editReply(`User has been kicked.\nReason: ${reason}`)
         } catch (error) {
             console.log(`There was an error when kicking: ${error}`);
         }

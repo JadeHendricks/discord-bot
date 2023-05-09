@@ -3,7 +3,6 @@ const kick = require("../moderation/kick");
 
 module.exports = (client) => {
     client.on("interactionCreate", (interaction) => {
-        console.log(interaction.commandName);
         if (!interaction.isChatInputCommand()) return;
     
         if (interaction.commandName === "add") {
@@ -14,10 +13,11 @@ module.exports = (client) => {
         }
 
         if (interaction.commandName === "ban") {
-            ban(interaction);
+            ban(interaction, interaction.commandName);
         }
+        
         if (interaction.commandName === "kick") {
-            kick(interaction);
+            kick(interaction, interaction.commandName);
         }
     });
 }

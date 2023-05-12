@@ -1,37 +1,15 @@
-// module.exports = (client) => {
-//     client.on("messageCreate", (message) => {
-
-//         const mentionedBot = message.mentions.members.has(process.env.CLIENT_ID);
-//         const isBot = message.author.bot;
-//         const botChannels = [process.env.BOTCHANNEL_ID, process.env.BOTCHANNEL2_ID, "722900689541660683"];
-
-//         if (isBot) return;
-//         if (mentionedBot) {
-//             if (!botChannels.includes(message.channel.id)) return;
-//             handleBotAtResponses(client, message);
-//             return;
-//         } 
-//         else {
-//             if (message.content.toLowerCase().includes("dragonic") || message.content.toLowerCase().includes("exavia")) {
-//                 return message.reply("random");
-//             }
-//         }
-//     });
-// }
-
 require('dotenv').config();
 const { AttachmentBuilder } = require('discord.js');
 const { Configuration, OpenAIApi } = require('openai');
 
-const context = "You are a friendly chatbot in Discord."
+const context = "You are a friendly chatbot in Discord.";
 
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_KEY
 });
+
 const openai = new OpenAIApi(configuration);
-
-const msgLengthLimit = 2000;
-
+const msgLengthLimit = 500;
 const channels = [process.env.BOTCHANNEL_ID, process.env.BOTCHANNEL2_ID];
 
 module.exports = (client) => {
@@ -43,6 +21,11 @@ module.exports = (client) => {
             if (message.content.startsWith('!')) return;
 
             if (mentionedBot) {
+                if (message.content.endsWith('>')) {
+                    message.reply("Why did you @ me hoe. Got something to say?");
+                    return;
+                }
+
                 await message.channel.sendTyping();
 
                 if (message.content.length > msgLengthLimit) {

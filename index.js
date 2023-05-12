@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Client, Events, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits } = require('discord.js');
 const onReady = require('./src/events/onReady');
 const onMessageCreate = require('./src/events/onMessageCreate');
 const onInteractionCreate = require('./src/events/onInteractionCreate');

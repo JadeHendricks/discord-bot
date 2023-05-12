@@ -95,12 +95,7 @@ function messageValidationChecks(message) {
     }
 
     if (message.content.endsWith(">")) {
-        message.reply("Why did you @ me hoe. Got something to say?");
-        return;
-    }
-
-    if (message.content.toLowerCase().includes("musico")) {
-        message.reply("Please don't mention that Musico to me. I will not speak about him any further thanks.");
+        message.reply(`Hey there! ${message.author}, did you know that Ripcord is not back babbbby!? What can I do for you?`);
         return;
     }
 

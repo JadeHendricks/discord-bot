@@ -1,9 +1,11 @@
 const { ActivityType } = require('discord.js');
 
-const hodgeTwinsList = ["mOGpVI-u8BY", "79WdAA6OJuw", "5qpCsvo2GSI", "kWXO3FgDuvM", "DInC047zMaQ", "y8X8p-LE2Rw"];
-const moviesList = ["Shrek 2 on DVD", "Austin Powers 3", "Inception", "The Godfather", "A Bugs Life", "John Wick 4"];
-const gamesList = ["Overwatch 2", "Spyro The Dragon", "Trackmania", "High On Life", "UNO", "Beat Saber", "DOTA 2"];
-const listeningList = ["Spotify", "Livin' La Vida Loca", "I Look Good", "The Bare Necessities", "Rap God", "All I Want For Christmas"];
+const activityLists = {
+    hodgeTwinsList: ["mOGpVI-u8BY", "79WdAA6OJuw", "5qpCsvo2GSI", "kWXO3FgDuvM", "DInC047zMaQ", "y8X8p-LE2Rw"],
+    moviesList: ["Shrek 2 on DVD", "Austin Powers 3", "Inception", "The Godfather", "A Bugs Life", "John Wick 4"],
+    gamesList: ["Overwatch 2", "Spyro The Dragon", "Trackmania", "High On Life", "UNO", "Beat Saber", "DOTA 2"],
+    listeningList: ["Spotify", "Livin' La Vida Loca", "I Look Good", "The Bare Necessities", "Rap God", "All I Want For Christmas"]
+}
 
 function generateRandomSelectionBasedOnList(mediaList, isLink = false) {
 
@@ -23,18 +25,18 @@ module.exports = [
     {
         name: "The Hodge Twins",
         type: ActivityType.Streaming,
-        url: generateRandomSelectionBasedOnList(hodgeTwinsList, true)
+        url: generateRandomSelectionBasedOnList(activityLists.hodgeTwinsList, true)
     },
     {
-        name: generateRandomSelectionBasedOnList(gamesList),
+        name: generateRandomSelectionBasedOnList(activityLists.gamesList),
         type: ActivityType.Playing
     },
     {
-        name: generateRandomSelectionBasedOnList(moviesList),
+        name: generateRandomSelectionBasedOnList(activityLists.moviesList),
         type: ActivityType.Watching
     },
     {
-        name: generateRandomSelectionBasedOnList(listeningList),
+        name: generateRandomSelectionBasedOnList(activityLists.listeningList),
         type: ActivityType.Listening
     }
 ];

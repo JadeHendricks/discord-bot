@@ -1,4 +1,4 @@
-const dupe = require("./utilities/kickorbanuser");
+const kickorbanuser = require("./utilities/kickorbanuser");
 require('dotenv').config();
 
 module.exports = async (interaction, action) => {

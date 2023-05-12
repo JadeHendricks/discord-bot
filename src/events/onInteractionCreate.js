@@ -1,6 +1,5 @@
-const ban = require("../moderation/ban");
-const kick = require("../moderation/kick");
 const imageGeneration = require("../community/image-generate");
+const kickOrBanUser = require("../moderation/kickorbanuser");
 
 module.exports = (client) => {
     client.on("interactionCreate", (interaction) => {
@@ -8,10 +7,8 @@ module.exports = (client) => {
 
         switch(interaction.commandName) {
             case "ban":
-                ban(interaction, interaction.commandName);
-                break;
             case "kick":
-                kick(interaction, interaction.commandName);
+                kickOrBanUser(interaction, interaction.commandName);
                 break;
             case "image-generate":
                 imageGeneration(interaction);

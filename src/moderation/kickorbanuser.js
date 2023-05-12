@@ -1,11 +1,11 @@
-const admins = require("../../data/admins");
+const admins = require("../data/admins");
 require('dotenv').config();
 
 module.exports = (interaction, action) => {
-    return KickOrBanUser(interaction, action);
+    return kickOrBanUser(interaction, action);
 }
 
-const KickOrBanUser = async(interaction, action) => {
+const kickOrBanUser = async(interaction, action) => {
     if (interaction && Object.keys(interaction)) {
 
         const { requestUser, targetUserId, moderationReason } = getRequestDetails(interaction);
@@ -16,7 +16,7 @@ const KickOrBanUser = async(interaction, action) => {
         try {
             handleModerationRequest(action, interaction, moderationReason);
         } catch (error) {
-            console.error("moderation::utilites::kickorbanuser - ", error.message);
+            console.error("moderation::utilites::kickOrBanUser - ", error.message);
         }
     }
 }
@@ -31,12 +31,12 @@ const getRequestDetails = (interaction) => {
 
 const handleModerationRequest = async(action, interaction, moderationReason) => {
     if (action === "kick") {
-        await interaction.guild.members.kick(targetUserId, reason)
+        //await interaction.guild.members.kick(targetUserId, reason)
         await interaction.editReply(`User has been kicked.\nReason: ${moderationReason}`)
         return;
     }
 
-    await interaction.guild.bans.create(targetUserId, {reason});
+    //await interaction.guild.bans.create(targetUserId, {reason});
     await interaction.editReply(`User has been banned.\nReason: ${moderationReason}`)
 }
 

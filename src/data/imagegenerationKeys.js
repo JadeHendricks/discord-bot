@@ -1,0 +1,1 @@
+module.exports = ["image", "picture", "icon", "painting", "pic", "drawing"];

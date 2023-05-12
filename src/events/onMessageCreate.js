@@ -1,6 +1,7 @@
-require('dotenv').config();
-const { AttachmentBuilder } = require('discord.js');
-const { Configuration, OpenAIApi } = require('openai');
+require("dotenv").config();
+const { AttachmentBuilder } = require("discord.js");
+const { Configuration, OpenAIApi } = require("openai");
+const imagegenerationKeys = require("../data/imagegenerationKeys");
 
 const context = "You are a friendly chatbot in Discord.";
 
@@ -13,40 +14,28 @@ const msgLengthLimit = 500;
 const channels = [process.env.BOTCHANNEL_ID, process.env.BOTCHANNEL2_ID];
 
 module.exports = (client) => {
-    client.on('messageCreate', async (message) => {
+    client.on("messageCreate", async (message) => {
         try {
             const mentionedBot = message.mentions.members.has(process.env.CLIENT_ID);
-            if (message.author.bot) return;
-            if (!channels.includes(message.channel.id)) return;
-            if (message.content.startsWith('!')) return;
 
-            if (mentionedBot) {
-                if (message.content.endsWith('>')) {
-                    message.reply("Why did you @ me hoe. Got something to say?");
-                    return;
-                }
+            if (mentionedBot && messageValidationChecks(message)) {
 
                 await message.channel.sendTyping();
-
-                if (message.content.length > msgLengthLimit) {
-                    message.reply("Whoa now, I'm not going to read all that. Maybe summarize?");
-                    return;
-                }
 
                 let prevMessages = await message.channel.messages.fetch({ limit: 15 });
                 prevMessages = prevMessages.sort((a, b) => a - b);
 
-                let conversationLog = [{ role: 'system', content: context }];
+                let conversationLog = [{ role: "system", content: context }];
 
                 prevMessages.forEach((msg) => {
-                    if (msg.content.startsWith('!')) return;
+                    if (msg.content.startsWith("!")) return;
                     if (msg.content.length > msgLengthLimit) return;
                     if (msg.author.id !== client.user.id && message.author.bot) return;
 
                     // If msg is from the bot (client) itself
                     if (msg.author.id === client.user.id) {
                         conversationLog.push({
-                            role: 'assistant',
+                            role: "assistant",
                             content: `${msg.content}`,
                         });
                     }
@@ -56,14 +45,14 @@ module.exports = (client) => {
                         if (msg.author.id !== message.author.id) return;
 
                         conversationLog.push({
-                            role: 'user',
+                            role: "user",
                             content: `${msg.content}`,
                         });
                     }
                 });
 
                 const res = await openai.createChatCompletion({
-                    model: 'gpt-3.5-turbo',
+                    model: "gpt-3.5-turbo",
                     messages: conversationLog,
                 });
 
@@ -93,4 +82,32 @@ module.exports = (client) => {
             console.log(`Error: ${error}`);
         }
     });
+}
+
+function messageValidationChecks(message) {
+    if (message.author.bot) return false;
+    if (!channels.includes(message.channel.id)) return false;
+    if (message.content.startsWith("!")) return false;
+
+    if (message.content.length > msgLengthLimit) {
+        message.reply("Whoa now, I'm not going to read all that. Maybe summarize?");
+        return false;
+    }
+
+    if (message.content.endsWith(">")) {
+        message.reply("Why did you @ me hoe. Got something to say?");
+        return false;
+    }
+
+    if (message.content.toLowerCase().includes("musico")) {
+        message.reply("Please don't mention that Musico to me. I will not speak about him any further thanks.");
+        return false;
+    }
+
+    if (new RegExp(imagegenerationKeys.join("|")).test(message.content.toLowerCase())) {
+        message.reply("Hey there, I am just a chatbot when it comes to @ing me. If you're looking to generate an image, you can use one of my slash commands :)");
+        return false;
+    }
+
+    return true;
 }

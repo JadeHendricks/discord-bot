@@ -6,19 +6,18 @@ module.exports = (client) => {
     client.on("interactionCreate", (interaction) => {
         if (!interaction.isChatInputCommand()) return;
 
-        if (interaction.commandName === "ban") {
-            ban(interaction, interaction.commandName);
-            return;
-        }
-        
-        if (interaction.commandName === "kick") {
-            kick(interaction, interaction.commandName);
-            return;
-        }
-
-        if (interaction.commandName === "image-generate") {
-            imageGeneration(interaction);
-            return;
+        switch(interaction.commandName) {
+            case "ban":
+                ban(interaction, interaction.commandName);
+                break;
+            case "kick":
+                kick(interaction, interaction.commandName);
+                break;
+            case "image-generate":
+                imageGeneration(interaction);
+                break;
+            default:
+                break;
         }
     });
 }

@@ -1,1 +1,1 @@
-module.exports = ["image", "picture", "icon", "painting", "pic", "drawing"];
+module.exports = ["image", "images", "picture", "pictures", "pic"];

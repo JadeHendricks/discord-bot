@@ -79,34 +79,34 @@ module.exports = (client) => {
                 }, 5000);
             });
 
-            console.log(`Error: ${error}`);
+            console.error("events::onMessageCreate - ", error.message);
         }
     });
 }
 
 function messageValidationChecks(message) {
-    if (message.author.bot) return false;
-    if (!channels.includes(message.channel.id)) return false;
-    if (message.content.startsWith("!")) return false;
+    if (message.author.bot) return;
+    if (!channels.includes(message.channel.id)) return;
+    if (message.content.startsWith("!")) return;
 
     if (message.content.length > msgLengthLimit) {
         message.reply("Whoa now, I'm not going to read all that. Maybe summarize?");
-        return false;
+        return;
     }
 
     if (message.content.endsWith(">")) {
         message.reply("Why did you @ me hoe. Got something to say?");
-        return false;
+        return;
     }
 
     if (message.content.toLowerCase().includes("musico")) {
         message.reply("Please don't mention that Musico to me. I will not speak about him any further thanks.");
-        return false;
+        return;
     }
 
     if (new RegExp(imagegenerationKeys.join("|")).test(message.content.toLowerCase())) {
         message.reply("Hey there, I am just a chatbot when it comes to @ing me. If you're looking to generate an image, you can use one of my slash commands :)");
-        return false;
+        return;
     }
 
     return true;

@@ -3,7 +3,6 @@ const { REST, Routes } = require("discord.js");
 const slashCommands = require("./src/commands/base/slashBase");
 
 const rest = new REST({version: "10"}).setToken(process.env.TOKEN);
-console.log("Registering slash commands", slashCommands);
 
 (async() => {
     try {
@@ -18,6 +17,6 @@ console.log("Registering slash commands", slashCommands);
         console.log("Slash commands were registered successfully!");
 
     } catch (error) {
-        console.error(`There was an error registering commands: ${error.message}`);
+        console.error("_::registerCommands - ", error.message);
     }
 })();

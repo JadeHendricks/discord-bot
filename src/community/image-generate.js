@@ -8,8 +8,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 module.exports = async (interaction) => {
-    
-    
+
     await interaction.deferReply();
 
     const prompt = interaction.options.getString("prompt");
@@ -33,6 +32,6 @@ module.exports = async (interaction) => {
         await interaction.editReply({ embeds: [embed] })
 
     } catch (error) {
-        console.error(error);
+        console.error("community::image-generate - ", error.message);
     }
 }

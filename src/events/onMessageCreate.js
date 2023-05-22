@@ -73,7 +73,7 @@ module.exports = (client) => {
                 }
             }
         } catch (error) {
-            message.reply(`Something went wrong. Try again in a bit.`).then((msg) => {
+            message.reply(`Something went wrong. Try again in a bit or upgrade to our paid plan for 24/7 usage.`).then((msg) => {
                 setTimeout(async () => {
                     await msg.delete().catch(() => null);
                 }, 5000);
@@ -91,11 +91,6 @@ function messageValidationChecks(message) {
 
     if (message.content.length > msgLengthLimit) {
         message.reply("Whoa now, I'm not going to read all that. Maybe summarize?");
-        return;
-    }
-
-    if (message.content.endsWith(">")) {
-        message.reply(`Hey there! ${message.author}, did you know that Ripcord is not back babbbby!? What can I do for you?`);
         return;
     }
 
